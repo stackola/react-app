@@ -7,18 +7,27 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 
 // Centralized application state
 // For more information visit http://redux.js.org/
-const store = createStore((state, action) => {
-  // TODO: Add action handlers (aka "reduces")
-  switch (action) {
-    case 'COUNT':
-      return { ...state, count: (state.count || 0) + 1 };
-    default:
-      return state;
-  }
+const userReducer = (state={"name":"willi"}, action) => {
+	switch(action.type){
+		case "CHANGE_NAME":{
+			return {...state, "name": action.payload}
+			break;
+		}
+	}
+	return state;
+};
+
+const todoReducer = (state=[], action) => {
+	return state;
+};
+const reducer = combineReducers({
+	user: userReducer,
+	todos: todoReducer
 });
+const store = createStore(reducer);
 
 export default store;

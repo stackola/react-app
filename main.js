@@ -18,6 +18,10 @@ import history from './core/history';
 
 let routes = require('./routes.json'); // Loaded with utils/routes-loader.js
 const container = document.getElementById('root');
+store.subscribe(()=>{
+	console.log(store.getState());	
+});
+
 
 function renderComponent(component) {
   ReactDOM.render(<Provider store={store}>{component}</Provider>, container);

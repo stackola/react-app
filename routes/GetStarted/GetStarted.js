@@ -7,25 +7,35 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import React from 'react';
-import { connect } from 'react-redux'
-import Layout from '../../components/Layout';
-import s from './GetStarted.css';
-import { title, html } from './GetStarted.md';
-@connect()
-class AboutPage extends React.Component {
+ import React from 'react';
+ import { connect } from 'react-redux'
+ import Layout from '../../components/Layout';
+ import s from './GetStarted.css';
+ import { title, html } from './GetStarted.md';
+ @connect((store) => {
+  return {
+    user:store.user
+  };
+})
+ class AboutPage extends React.Component {
 
   componentDidMount() {
-    document.title = title;
+    console.log(this.props.user);
+    document.title = this.props.user.name;    
+    console.log(this);
+    setTimeout(()=>{
+       this.props.dispatch({type:"CHANGE_NAME", payload:"Peterinos22"});
+     },2000);
   }
 
   render() {
+
     return (
       <Layout className={s.content}>
-        <h1>{title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: html }} />
+      <h1>{title}</h1>
+      {this.props.user.name}
       </Layout>
-    );
+      );
   }
 
 }
